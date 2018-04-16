@@ -1,0 +1,60 @@
+Write a method to replace all spaces in a string with '%20  You may assume that the 
+string has suf cient space at the end to hold the additional characters,and that 
+you are given the "true" length of the string. (Note: If implementing in Java,please use a 
+character array so that you can perform this operation in place.)
+
+EXAMPLE
+Input: "Mr John Smith ", 13 Output: "Mr%20John%20Smith"
+
+We can view our input as an array of characters
+
+['M', 'r', ' ', 'J', 'o', 'h', 'n', ' ', 'S', 'm', 'i', 't', 'h', ' '. ' ',  ' ', ' ']
+
+the naive way would be to just loop through each char, adding it to result array 
+and each time you see a space (white space between two chars) then add a %, 2, and 0 to the
+resulting array. This would be O(n) space and O(n) time.
+
+Can we do better?
+BCR - O(n) since we have to visit each character at least once
+BCS - O(1) Since extra spaces are already included this could be done with O(1) space
+
+As part of the input you are given the length of the string. So you know at which index it ends.
+
+With these types of problems it is best to work from the back and build your array that way you only overwrite chars you have
+already seen
+
+psuedocode
+0. initialize the variable keeping track of insertion point to input array length - 1
+1. iterate through array backwards starting at arguments[1] - 1
+2. if current item != ' ' then take current item and set array[insertionIndex] = currentItem
+3. if current item === ' ' then call helper function encode space, passing in array and index
+4. join array on [''] and return
+
+helper function pseudocode 
+0. take index that is passed in and use a for loop to loop through [0, 2, %].
+1. insert the current item at index then increment index
+
+const URLify = (string, numChars) => {
+  const charArray = string.split('');
+  let insertAtIndex = charArray.length - 1;
+  for (let i = numChars - 1; i >= 0; i -= 1) {
+    if (charArray[i] !== ' ') {
+      charArray[insertAtIndex] = charArray[i];
+      insertAtIndex -= 1;
+    } else {
+      encodeSpace(charArray, insertAtIndex);
+      insertAtIndex -= 3;
+    }
+  }
+  return charArray.join(''); 
+}
+
+const encodeSpace = (string, insertionPoint) => {
+  let currentInsertion = insertionPoint;
+  const encoding = ['0', '2', '%'];
+  for (let i = 0; i < encoding.length; i += 1) {
+    string[currentInsertion] = encoding[i];
+    currentInsertion -= 1;
+  }
+}
+
