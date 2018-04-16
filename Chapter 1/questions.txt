@@ -1,0 +1,37 @@
+V1.1 O(b)
+
+V1.2 O(b)
+
+V1.3 O(1)
+
+V1.4 O(a / b)
+
+V1.5 O(log(n))
+
+V1.6 O(sqrt(n))
+
+V1.7 O(n)
+
+V1.8 O(n)
+
+V1.9 there will be n steps total then at each step
+there is n/2 steps on average so the runtime is 
+O(n^2)
+
+V1.10 O(number of digits) or O(log(n))
+
+V1.11 base case is when remaining === 0
+so it has k slots available
+at each slot there are 26 branches
+depth = k and branches = 26
+26 ^ k
+at the leaves we will need to check if each is 
+in order. isInOrder is O(k) since each string will have
+length k 
+O(26^k * k)
+
+V1.12 First step is to sort one of the arrays
+blogb 
+then for every element in a we have logb operations
+blogb + alogb
+runtime is O((a + b)logb)
