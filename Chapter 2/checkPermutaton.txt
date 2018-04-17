@@ -1,0 +1,46 @@
+Check Permutation: Given two strings, write a method to decide if one is a permutation of the
+other.
+
+Naive way would be to generate every single permutation, loop through each permutation and check to see if it equals the other string
+Time complexity: you have n! leaves with n calls to get to each of those. Then you have to go through each leaf once and check for string equality
+O((length of string)! * (length of string) * (length of string))
+
+BCR is O(n) because there is no way we could do this without visiting each char in the array
+BCS is O(1) if we can find to do the permutation check in place
+
+Another solution I can think of would be to loop through one string and create a hashmap of all the characters and their
+frequencies. Then loop through the second string and do the same thing. Then lastly loop through each item in one of the hashmaps
+and compare it to the other making sure they both have the same keys and values
+Time complexity of this is O(n) but space complexity is O(n)
+
+I cant think of a way to do this with constant space complexity because we need some way of keeping track of the frequencies
+
+const checkPermutation = (string1, string2) => {
+  if (string1.length !== string2.length) {
+    return false;
+  }
+  const string1CharFrequencies = createFrequencyObject(string1);
+  const string2CharFrequencies = createFrequencyObject(string2);
+  return checkEquality(string1CharFrequencies, string2CharFrequencies);
+}
+
+const createFrequencyObject = (string)=> {
+  const frequencyObj = {};
+  for (let i = 0; i < string.length; i += 1) {
+    if (frequencyObj[string[i]]) {
+      frequencyObj[string[i]] += 1;
+    } else {
+      frequencyObj[string[i]] = 1;
+    }
+  }
+  return frequencyObj;
+}
+
+const checkEquality = (obj1, obj2) => {
+  for (key in obj1) {
+    if (obj1[key] !== obj2[key]) {
+      return false;
+    }
+  }
+  return true;
+}
