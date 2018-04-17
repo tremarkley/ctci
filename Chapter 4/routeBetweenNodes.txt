@@ -1,0 +1,43 @@
+Route Between Nodes: Given a directed graph, design an algorithm to  find out whether there is a route between two nodes.
+
+so here we are given two nodes, a target and a source and we want to find out if a route exists between both
+
+I think here it makes sense to use the bidirectional approach where you do bfs search from both sides and see if they ever 
+collide
+
+In this scenario would we go through all nodes before giving up?
+
+Then on each visit we could check to see if the other node has already visited that node
+
+pseudocode:
+0. Create a hash table which keeps track of all nodes that have been visited by source and all that have been visited by target
+1. Add source to hash table to its hash table and target to its hash table
+2. Search through all of sources immediate children, check if it is in targets hash table and add them to sources visited hash table 
+    and adding them to next queue
+3. Search through all of targets immediate children, check if node is in sources has table and 
+    add them to hash table and add them to next queue
+4. repeat steps 3 and 4 with new queue
+
+class Graph {
+  constructor() {
+    this.nodes = [];
+  }
+
+  addNode(node) {
+    this.nodes.push(node);
+  }
+}
+
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.children = [];
+  }
+
+  addChild(value) {
+    const newNode = new Node(value);
+    this.children.push(newNode);
+  }
+}
+
+
