@@ -1,0 +1,21 @@
+Is Unique: Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?
+
+One thing that comes to mind would be to iterate through each character in the string and compare it to every other character in front of it
+This would be n^2 time complexity but constant space
+
+BCR is O(n) since you have to go through each character at least once
+BCS is O(1)
+
+Another way I can think to do this with an additional data structure would be to use a hash map to keep track of what youve already seen
+time complexity - O(n), space complexity - O(n)
+
+If you want to sacrifice some time complexity we could sort the string and just compare to the previous character and make sure they
+are not equal. Time complexity O(nlogn), space complexity O(1)
+
+You could keep an array that maps the integer representation of each char and then when you see a char you can mark it in the array.
+Lets say we dont have any spaces or special chars and just letters 0 - 26. We would then create a 26 character array and fill it with
+zeroes
+
+We could then convert the char to it's integer representation. Then check to see if that index in the array = 0.
+if it does then turn that index in the array from 0 to 1 if not then return false. If you get through the entire string
+return true
