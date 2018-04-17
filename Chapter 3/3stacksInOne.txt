@@ -1,0 +1,63 @@
+Three in One: Describe how you could use a single array to implement three stacks.
+
+One way I can think of to do this is to have a fixed capacity for each stack, then to create an array with the size
+equal to 3x that capactiy. Then you could keep track of the top index for eac stack within the array
+
+The array would be split up like so
+stack 1: [0, n/3)
+stack 2: [n/3, 2n/3)
+stack 3: [2n/3, n)
+
+you would also have to keep track of which stack you are pushing on to and pulling off of
+
+class threeStacks {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.values;
+    this.size = [0, 0, 0];
+    this.initialize();
+  }
+
+  initialize() {
+    this.values = new Array(capacity * 3);
+  }
+
+  push(stackNum, value) {
+    if (this.size[stackNum] > this.capacity) {
+      throw new Error('stack has reach capacity');
+    }
+    const top = this.getTopIndex(stackNum);
+    this.size[stackNum] += 1;
+    this.values[top + 1] = value;
+  }
+
+  pop(stackNum) {
+    if (this.size[stackNum] < 0) {
+      return undefined;
+    }
+    const top = this.getTopIndex(stackNum);
+    const returnValue = this.values[top];
+    this.values[top] = 0;
+    this.size[stackNum] -= 1;
+    return returnValue;
+  }
+
+  peek(stackNum) {
+    if (this.size[stackNum] < 0) {
+      return undefined;
+    }
+    const top = this.getTopIndex(stackNum);
+    return this.values[top];
+  }
+
+  getTopIndex(stackNum) {
+    // if there are no items in the stack then the top should be - 1
+    const startingIndex = getStartingIndex(stackNum);
+    return startingIndex - this.size[stackNum] - 1;
+  }
+
+  getStartingIndex(stackNum) {
+    const start = (stackNum * this.capacity) + (this.capacity - 1);
+    return start;
+  }
+} 
