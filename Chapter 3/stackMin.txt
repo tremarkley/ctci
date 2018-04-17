@@ -1,0 +1,85 @@
+Stack Min: How would you design a stack which, in addition to push and pop, 
+has a function min which returns the minimum element? 
+Push, pop and min should all operate in 0(1) time.
+
+To do this we have to recalculate the min every time a new element is put in or popped off
+
+One way we could do this is to have two stacks and whenever you push on you check to see if that value is less than the current min
+
+When youpop off you can check to see what the min was before that pop
+
+essentially whenever you push on you can chck to see if what is being put on is smaller than the smallest thing on the stack
+if it isthen it is the new min. if you end up popping off the min then you can take the next one in line
+
+so each time, check to see if item is smaller than min, if it is push on to min stack
+then each time you pop check to see if item is === the min, if it is then you will need to pop off the min stack as well
+
+class Stack {
+  constructor() {
+    this.top = null;
+  }
+
+  push(value) {
+    if (this.isEmpty()) {
+      this.top = new StackNode(value);
+    } else {
+      const newNode = new StackNode(value);
+      newNode.next = this.top;
+      this.top = newNode;
+    }
+  }
+
+  pop() {
+    if (this.isEmpty()) {
+      throw new Error('Stack is empty!);
+    }
+    const nodeToReturn = this.top.value;
+    this.top = this.top.next;
+    return nodeToReturn;
+  }
+
+  peek() {
+    if (this.isEmpty()) {
+      throw new Error('Stack is empty');
+    }
+    return this.top.value;
+  }
+
+  isEmpty() {
+    return this.top === null;
+  }
+}
+
+class StackNode {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+class MinStack extends Stack {
+  constructor() {
+    super();
+    this.minStack = new Stack();
+  }
+
+  push(value) {
+    super(value);
+    if (value <= this.getMin()) {
+      this.minStack.push(value);
+    }
+  }
+
+  pop() {
+    const valueToReturn = super();
+    if (valueToReturn === this.minStack.getMin) {
+      this.minStack.pop();
+    }
+    return valueToReturn;
+  }
+
+  getMin() {
+    this.minStack.peek();
+  }
+}
+
