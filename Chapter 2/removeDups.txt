@@ -24,3 +24,6 @@ const removeNode = (node) => {
     node.prev.next = node.next;
   }
 }
+
+FOLLOW UP: Could use a runner approach where we compare each node to every other node, and removing duplicates along the way.
+

@@ -1,0 +1,27 @@
+ Implement an algorithm to  nd the kth to last element of a singly linked list.
+
+ The BCR is O(n) since you need to loop through each element in order to know how long the list is
+
+ to do this I would loop through the linked list once, keeping track of a count. Then once I reach the end of the linked list
+ we could loop through it again one more time and keep track of a new count, then stop when count === total length - k
+
+ const kthToLast = (list, k) => {
+  let totalLength = 0; 
+  let currentNode = list.head;
+  while (currentNode !== null) {
+    totalLength += 1;
+    currentNode = currentNode.next;
+  }
+  if (k >= totalLength) {
+    return null;
+  }
+  let currentCount = 0;
+  const targetCount = totalLength - k;
+  currentNode = list.head;
+  while (currentNode !== null) {
+    currentCount += 1;
+    if (currentCount === targetCount) {
+      return currentNode;
+    }
+  }
+ }
