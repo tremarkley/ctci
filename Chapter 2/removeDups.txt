@@ -1,0 +1,26 @@
+Remove Dups! Write code to remove duplicates from an unsorted linked list.
+FOLLOW UP
+How would you solve this problem if a temporary buffer is not allowed?
+
+One way I can think of is having an object that keeps track of what values you have already seen. Then when you are looping through the 
+linked list if you come across one you have already seen then remove the node
+
+const removeDups = (list) => {
+  const valuesSeen = {};
+  let currentNode = list.head.data;
+  while (currentNode !== null) {
+    if (!valuesSeen[currentNode.data]) {
+      removeNode(currentNode);
+    } else {
+      valuesSeen[currentNode.data] = true;
+    }
+  } 
+  return list;
+}
+
+const removeNode = (node) => {
+  // look for previous 
+  if (node.prev !== null) {
+    node.prev.next = node.next;
+  }
+}
