@@ -1,0 +1,72 @@
+Sum Lists: You have two numbers represented by a linked list, where each node contains a single digit.
+The digits are stored in reverse order, such that the 1 's digit is at the head of the list. 
+Write a function that adds the two numbers and returns the sum as a linked list.
+
+EXAMPLE
+Input:(7-> 1 -> 6) + (5 -> 9 -> 2).Thatis,617 + 295. Output:2 -> 1 -> 9.Thatis,912.
+FOLLOW UP
+Suppose the digits are stored in forward order. Repeat the above problem. 
+EXAMPLE
+lnput:(6 -> 1 -> 7) + (2 -> 9 -> 5).That is,617 + 295. Output:9 -> 1 -> 2.Thatis,912.
+
+one approach is that you keep track of the tens place. When you do addition if it is greater than 10 then you 
+carry the 1 to the next addition
+
+Another thing to consider is that the linked list may be different lengths
+if one runs out before the other then you need to append those numbers to the end
+
+const handleLeftoverNodes = (result, nodeToAppend, carriedTen) => {
+  let currentNode = nodeToAppend;
+  while (carriedTen) {
+    if (currentNode) {
+      let sum = currentNode.data + 1;
+      if (sum < 10) {
+        carriedTen = false;
+      } else {
+        sum = 0;
+      }
+      result.data = sum;
+      result.next = new Node();
+      result = result.next;
+      currentNode = currentNode.next;
+    } else {
+      if (carriedTen) {
+        result.data = 1;
+        carriedTen = false;
+      }
+    }
+  }
+  if (currentNode) {
+    result = currentNode;
+  }
+}
+
+const sumLinkedList = (list1, list2) => {
+  let carriedTen = false;
+  let list1currentNode = list1.head;
+  let list2currentNode = list2.head;
+  let result = new Node();
+  while (!list1currentNode && !list2currentNode) {
+    let sum = list1currentNode.data + list2currentNode.data;
+    if (carriedTen) {
+      sum += 1;
+    }
+    if (sum >= 10) {
+      carriedTen = true;
+      sum = sum % 10;
+    }
+    result.data = sum;
+    list1currentNode = list1currentNode.next;
+    list2currentNode = list2currentNode.next;
+    result.next = new Node();
+    result = result.next;
+  }
+  if (list1currentNode) {
+    handleLeftoverNodes(result, list1currentNode, carriedTen);
+  }
+  if (list2currentNode) {
+    handleLeftoverNodes(result, list2currentNode, carriedTen);
+  }
+
+  return result;
+}
