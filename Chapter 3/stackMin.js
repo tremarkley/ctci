@@ -66,20 +66,3 @@ class MinStack extends Stack {
     return this.minStack.peek();
   }
 }
-
-const testMinStack = new MinStack();
-testMinStack.push(6);
-console.log(testMinStack.getMin());
-testMinStack.push(5);
-console.log(testMinStack.getMin());
-testMinStack.push(10);
-testMinStack.push(15);
-console.log(testMinStack.pop());
-console.log(testMinStack.getMin());
-console.log(testMinStack.pop());
-console.log(testMinStack.getMin());
-console.log(testMinStack.pop());
-console.log(testMinStack.getMin());
-console.log(testMinStack.pop());
-console.log(testMinStack.getMin());
-console.log(testMinStack.pop());
