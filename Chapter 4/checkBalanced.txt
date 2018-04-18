@@ -1,0 +1,60 @@
+Check Balanced: Implement a function to check if a binary tree is balanced. 
+For the purposes of this question, a balanced tree is defined to be a tree such that 
+the heights of the two subtrees of any node never differ by more than one.
+
+for this example, a tree is considered not balance if the heights differ by more than one
+
+  1
+2   3
+        4
+      5
+
+The above tree would be considered unbalanced. In order to check for this we could look at the difference in height between
+node 3's left subtree and its right
+
+I order to check for this we could use a recursive algorithm that as it traverses down the tree keeps track of the height
+
+so we start at 1 and go left and find that the height is one, then go right and find a height of 1
+
+then move to two and we see that it has no children so we cant keep going
+
+then move to 3 and see that it's left has height 0. then we go right and see that it has a height of 1. So this is potential 
+for an imbalance so then we can continue going down the tree and if we find another node then we can say we have found an unbalanced tree
+
+For this it might be best to do a bfs search and a dfs when we find a potential imbalance (where height of one side is 0 but the other side
+contains a node)
+
+const checkBalanced = (tree) => {
+  const queue = new Queue();
+  queue.enqueue(tree.value);
+  while (!queue.isEmpty()) {
+    const currentNode = queue.dequeue();
+    if (currentNode.left && currentNode.right) {
+      queue.enqueue(currentNode.left);
+      queue.enqueue(currentNode.right);
+    } else {
+      //check to see if this is imbalanced by doing a dfs search
+      if (currentNode.left) {
+        // we have potential imbalance on right
+        if (isHeightGreaterThanOne(currentNode.left)) {
+          return false;
+        }
+      }
+      if (currentNode.right) {
+        // we have imbalance on the left
+        if (isHeightGreaterThanOne(currentNode.left)) {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+} 
+
+const isHeightGreaterThanOne = (tree) => {
+  let height = 1;
+  if (this.right || this.left) {
+    height += 1;
+  }
+  return height > 1;
+}
