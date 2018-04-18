@@ -1,0 +1,48 @@
+Minimal Tree: Given a sorted (increasing order) array with unique integer elements, write an 
+algo­rithm to create a binary search tree with minimal height.
+
+if we start from the middle and work out way out we can create the tree. I think that it makes most sense to add children to the tree
+and minimize swapping
+
+if it is an odd numbered array then we can find the root element by going to the center of the array
+if it is an even number you can pick between two different numbers as the center and you will eventually run out on one side before 
+the other
+
+I am going to write the algorithm to always select the exact center or the index right beneath it
+
+class BinarySearchTree {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+
+  addChild(value) {
+    if (value < this.value) {
+      if (!this.left) {
+        this.left = new BinarySearchTree(value);
+      } else {
+        this.left.addChild(value);
+      }
+    } else {
+      if (!this.right) {
+        this.right = new BinarySearchTree(value);
+      } else {
+        this.right.addChild(value);
+      }
+    }
+  }
+}
+
+const createBST = (inputArray, minIndex = 0, maxIndex = inputArray.length) => {
+  const middleIndex = Math.floor((maxIndex + minIndex) / 2);
+  const tree = new BinarySearchTree(inputArray[middleIndex]);
+  // left side of middleIndex
+  if (middleIndex - 1 >= minIndex) {
+    tree.addChild(createBST(inputArray, minIndex, middleIndex - 1));
+  }
+  if (middleIndex + 1 <= maxIndex) {
+    tree.addChild(createBST(inputArray, middleIndex + 1, maxIndex));
+  }
+  return tree;
+}
