@@ -1,0 +1,100 @@
+Jigsaw: Implement an NxN jigsaw puzzle. Design the data structures and explain an algorithm to solve the puzzle. 
+You can assume that you have a fitsWith method which, when passed two puzzle edges, 
+returns true if the two edges belong together.
+
+class JigSaw {
+  constructor(n, pieces) {
+    this.unplacedPieces = pieces;
+    this.grid = [n - 1][n - 1];
+    this.placedPieces = {};
+  }
+}
+
+//we can find a match for two pieces before they are placed on the grid
+
+class Piece {
+  constructor(id, rightEdge = undefined, leftEdge = undefined, topEdge = undefined, bottomEdge = undefined) {
+    this.id = id;
+    this.rightEdge = rightEdge;
+    this.leftEdge = leftEdge;
+    this.topEdge = topEdge;
+    this.bottomEdge = bottomEdge;
+    this.location = []
+  }
+}
+
+const winJigSaw = (Jigsaw) => {
+  getCornerPieces(Jigsaw.unplacedPieces, Jigsaw.placedPieces, Jigsaw.grid);
+  const edgePieces = getEdges(Jigsaw.pieces);
+  placeEdgePieces = (Jigsaw.unplacedPieces, Jigsaw.placedPieces, edgePieces, Jigsaw.grid);
+  // after all the edge pieces are place start going through each piece and comparing it to each piece that has been placed on the board
+  // now that we have all the edge pieces we can start matching them up and working our way out from the corners
+  // from here we can work are way out from the corner piece so
+
+}
+
+const getEdges = (pieces) => {
+  const edgePieces = {
+    left: {},
+    right: {},
+    bottom: {},
+    top: {},
+  };
+  for (const piece in pieces) {
+    if (pieces[piece].rightEdge === undefined) {
+      edgePieces.right[piece] = pieces[piece];
+      hasEdge = true;
+    }
+    if (pieces[piece].leftEdge === undefined) {
+      edgePieces.left[piece] = pieces[piece];
+      hasEdge = true;
+    }
+    if (pieces[piece].topEdge === undefined) {
+      edgePieces.top[piece] = pieces[piece];
+    }
+    if (pieces[piece].bottomEdge === undefined) {
+      edgePieces.bottom[piece] = pieces[piece];
+    }
+  }
+  return edgePieces;
+}
+
+const placeCornerPieces = (availablePieces, placedPieces, grid) => {
+  for (const piece in availablePieces) {
+    if (availablePieces[piece].rightEdge === undefined && availablePieces[piece].bottomEdge === undefined) {
+      placedPieces[piece] = availablePieces[piece];
+      grid[n - 1][n - 1] = placedPieces[piece];
+      delete availablePieces[piece];
+    }
+    // and so on
+  }
+}
+
+const placeEdgePieces => (unplaced, placed, edgePieces, grid) => {
+  // find all right edge pieces
+  let rightEdgePieceToPlace
+  for (const piece in edgePieces.right) {
+    // first compare to bottom left grid piece then compare to the piece above that one
+    if (fitsWith(edgePieces.right[piece], rightEdgePieceToPlace)) {
+      placePiece(i, j, edgePieces.right[piece]);
+      rightEdgePieceToPlace = edgePieces.right[piece];
+    }
+  }
+  for (const piece in edgePieces.left) {
+
+  }
+  for (const piece in edgePieces.bottom) {
+
+  }
+  for (const piece in edgePieces.top) {
+
+  }
+}
+
+When checking pieces you always want to check it with another pieces complementary edges
+The sides of the edges are relative to the correct position of the pieces
+When a user goes to place a piece they need to check if any of the edges will line up with the other piece
+If a piece is on an edge then that side will be considered "undefined".For example, a piece on the top left corner
+would have a top edge and a left edge that are both undefined. 
+Also, the best pieces to start with are edge pieces. As it is a smaller pool to pick from 
+
